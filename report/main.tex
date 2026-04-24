@@ -1,0 +1,83 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{amsmath}
+\usepackage[colorlinks=true, linkcolor=black, linktoc=all, bookmarks=true, urlcolor=black]{hyperref}
+\usepackage{fontawesome5}
+\usepackage{indentfirst}
+\tcbuselibrary{most}
+
+\title{\textbf{Лабораторная работа №5. \\ Снятие лексической неоднозначности.}}
+\author{Берлет Максим гр. 3384}
+\date{}
+
+\begin{document}
+\maketitle
+
+    \begin{center}
+        \vspace{1cm}
+        \includegraphics[scale=0.5]{utils/logo-leti-sin-rus-2017.png}
+    \end{center}
+
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\section{Задание.}
+
+\begin{tcolorbox}[title=Условие задания, colframe=blue, fonttitle=\bfseries]
+Реализовать систему, которая:
+
+определяет наиболее подходящее значение многозначного слова в контексте (word sense disambiguation, WSD — снятие лексической неоднозначности);
+извлекает и выводит семантические отношения (синонимы, гиперонимы, гипонимы) для выбранного значения. 
+
+\emph{Замечание: слово, для которого Вы выводите семантические отношения отмечаем сами. Например: 
+Я буду сдавать лабораторные работы вовремя и получу хорошую оценку за экзамен.  
+Отмеченное слово “оценка” . Для него решаем WSD задачу.}
+\\\\
+Для решения задачи необходимо использовать тезаурус WordNet или его аналог (например, RuWordNet, РуТез и др.), а также реализовать алгоритм Леска.
+Использование готовых реализаций WSD запрещено.
+
+\end{tcolorbox}
+
+\begin{tcbitemize}[
+    raster columns=2,         
+    raster equal height=rows,  
+    raster row skip=5mm,      
+    raster column skip=5mm,            
+    colframe=black,             
+    fonttitle=\bfseries
+]
+\tcbitem[title=Входные данные, colframe=blue] 
+    Cписок предложений и слов, для которых решается WSD.
+\tcbitem[title=Выходные данные, colframe=blue] 
+    Для каждого запроса программа должна вывести:
+    \begin{enumerate}
+        \item Исходный запрос
+        \item Синонимы
+        \item Гипонимы
+        \item Гиперонимы
+    \end{enumerate}
+\end{tcbitemize}
+
+\pagebreak
+
+
+\section{Выполнение.}
+\subsection{Описание алгоритма Леска}
+    \begin{itemize}
+        \item Вокруг целевого слова берется контекст - его окружение.
+        \item Из тезаруса извлекаются всевозможные определения целевого слова.
+        \item Вычисляется пересечение слов из определения и контекста.
+        \item Выбирается то определение, которое имеет больше всего общих слов с контекстом.
+    \end{itemize}
+\subsection{Описание изменения в алгоритме}
+    В данной реализации было изменено сравнение контекста и определения: вместо простого пересечения вычисляется вектор контекста с помощью предобученной модели и для каждого определения вычисляется вектор.
+    Затем между этими векторами считается косинус угла. В качестве итогового берется определение с наименьшим значением.
+\section{Результаты}
+    
+\section{Выводы}
+\end{document}
