@@ -19,7 +19,10 @@ class Lesk:
         
         extended_senses = []
         for sense in senses:
-            extended_sense = sense.synset.title + f" ".join([h.title for h in sense.synset.hypernyms])
+            extended_sense = sense.synset.title + \
+                " ".join([syn.name.lower() for syn in sense.synset.senses]) + \
+                " ".join([h.title.lower() for h in sense.synset.hypernyms]) + \
+                " ".join([h.title.lower() for h in sense.synset.hyponyms])
             extended_senses.append((extended_sense, sense.synset_id))
         
         sense_embeddings = [(self.sentence_encoder.encode(sense), i) for sense, i in extended_senses]
